@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".DetailsTimbreActivity">
+
+    <ImageView
+        android:id="@+id/txt_v_titles"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_marginTop="0dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/timbre_fiscal_electronique"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_recap"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="#634420"
+        android:text="@string/recap"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/table_recap"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_v_titles" />
+
+    <TableLayout
+        android:id="@+id/table_recap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/colorBlack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_recap"
+        >
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/divider"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:layout_weight="0.70"
+                android:text="@string/timbre"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:paddingStart="@dimen/dimen_row2_txt_padding_start"
+                android:paddingEnd="@dimen/dimen_row2_txt_padding_start"
+                android:background="@drawable/divider"
+                android:text="@string/quantite"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:paddingStart="@dimen/dimen_row2_txt_padding_start"
+                android:paddingEnd="@dimen/dimen_row2_txt_padding_start"
+                android:background="@drawable/divider"
+                android:text="@string/total"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/idLayouthClient_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        android:padding="@dimen/paddingLayoutMiddle">
+
+        <ImageView
+            android:id="@+id/btn_return"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:src="@drawable/retour"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_suivant"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_suivant"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:src="@drawable/suivant"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/btn_return"
+            android:layout_marginStart="3dp"
+            tools:ignore="MissingConstraints" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

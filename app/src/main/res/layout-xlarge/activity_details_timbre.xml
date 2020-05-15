@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    tools:context=".DetailsTimbreActivity">
+    <ImageView
+        android:id="@+id/txt_v_titles"
+        android:layout_width="@dimen/dimen_banner_width"
+        android:layout_height="@dimen/dimen_banner_height"
+        android:layout_marginTop="@dimen/dimen_banner_margin_top"
+        android:src="@mipmap/header_title"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+    <TableLayout
+        android:id="@+id/table_recap"
+        android:layout_width="@dimen/dimen_table_width"
+        android:layout_height="@dimen/dimen_table_height"
+        android:layout_marginStart="@dimen/dimen_table_margin_start"
+        android:layout_marginTop="@dimen/dimen_table_margin_top"
+        android:background="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_v_titles"
+        >
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txt_validation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_row1_txt_margin_start"
+                android:layout_marginTop="@dimen/dimen_row1_txt_margin_top"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:textColor="@color/colorBlack"
+                android:text="@string/validation"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerPadding="@dimen/dimen_diver_padding"
+            tools:divider="@color/colorBlack">
+
+            <TextView
+                android:id="@+id/txt_global"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/round_rect"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/dimen_txt_row"
+                android:text="@string/global_amount" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_recap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_rect"
+                android:textColor="@color/colorBlack"
+                android:layout_weight="1"
+                android:text="@string/recap" />
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="@color/colorWhite">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/divider"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:layout_weight="1.75"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                android:text="@string/timbre"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingStart="@dimen/dimen_row2_txt_padding_start"
+                android:paddingEnd="@dimen/dimen_row2_txt_padding_start"
+                android:background="@drawable/divider"
+                android:text="@string/prixU"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.25"
+                android:paddingStart="@dimen/dimen_row2_txt_padding_start"
+                android:paddingEnd="5dp"
+                android:background="@drawable/divider"
+                android:text="@string/quantite"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.25"
+                android:paddingStart="@dimen/dimen_row2_txt_padding_start"
+                android:paddingEnd="@dimen/dimen_row2_txt_padding_start"
+                android:background="@drawable/divider"
+                android:text="@string/total"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.25"
+                android:paddingStart="@dimen/dimen_row2_txt_padding_start"
+                android:paddingEnd="@dimen/dimen_row2_txt_padding_start"
+                android:background="@drawable/divider"
+                android:visibility="invisible"
+                android:text="@string/total"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"/>
+        </TableRow>
+
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btn_return_recap"
+        android:layout_width="@dimen/dimen_btn4_width"
+        android:layout_height="@dimen/dimen_btn4_height"
+        android:layout_marginStart="@dimen/dimen_btn4_margin_start"
+        android:layout_marginEnd="@dimen/dimen_btn4_margin_separate"
+        android:layout_marginTop="@dimen/dimen_btn4_margin_top"
+        android:background="@drawable/round_rect_yellow"
+        android:text="@string/retour"
+        app:layout_constraintTop_toBottomOf="@+id/table_recap"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn_suivant_recap"
+        android:layout_width="@dimen/dimen_btn4_width"
+        android:layout_height="@dimen/dimen_btn4_height"
+        android:layout_marginStart="@dimen/dimen_btn4_margin_start"
+        android:layout_marginEnd="@dimen/dimen_btn4_margin_separate"
+        android:layout_marginTop="@dimen/dimen_btn4_margin_top"
+        android:text="@string/suivant"
+        android:background="@drawable/round_rect_yellow"
+
+        app:layout_constraintEnd_toEndOf="@+id/table_recap"
+        app:layout_constraintTop_toBottomOf="@+id/table_recap"
+        />
+</android.support.constraint.ConstraintLayout>
