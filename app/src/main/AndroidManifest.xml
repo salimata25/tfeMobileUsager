@@ -27,7 +27,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".HistoriqueActivity"></activity>
+        <activity android:name=".InfoTimbreActivity"></activity>
+        <activity android:name=".InfoCompteActivity" />
+        <activity android:name=".NavBarActivity" />
+        <activity android:name=".HistoriqueActivity" />
         <activity android:name=".PaiementMobileActivity" />
         <activity android:name=".ModePaiementActivity" />
         <activity android:name=".CodeSmsActivity" />

@@ -50,28 +50,9 @@ public class InsererMontantActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(InsererMontantActivity.this, menu_bar);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.profil:
-                                break;
-                            case R.id.deconnect:
-                                Intent intent = new Intent(getApplicationContext(), DiotaliLogin.class);
-                                startActivity(intent);
-                                finish();
-                        }
-                        return true;
-                    }
-                });
-
-                popup.show();
+                Intent intent = new Intent(getApplicationContext(), NavBarActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
         });
 

@@ -5,10 +5,10 @@ import sn.diotali.tfe_usager_dgid.types.User;
 
 public class Constants {
 
-    public static String BASE_URL = "http://192.168.1.52:8031/tfe/mobileagent/";
+    public static String BASE_URL = "https://192.168.1.51:8031/tfe/access/mobile/";
 
     public static void newURL(final String ADDRESS_IP){
-        BASE_URL = "http://" + ADDRESS_IP +":8031/tfe/mobileagent/";
+        BASE_URL = "http://" + ADDRESS_IP +":8031/tfe/access/mobile/";
     }
 
     public static final String QR_CODE_KEY = "6AC292FAA1315B4D858AB3A3D7D5933A";
@@ -18,6 +18,8 @@ public class Constants {
         public static final String ACHETER_TIMBRE = "acheter/timbre";
         public static final String ACHETER_QUITTANCE = "acheter/quittance";
         public static final String LOGIN = "connexion";
+        public static final String INSCRIRE = "usager/inscrire";
+        public static final String ACTIVERCOMPTE = "usager/inscrire/validation";
     }
 
     public static class Menu {

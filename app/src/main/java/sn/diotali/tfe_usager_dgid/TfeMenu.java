@@ -2,18 +2,29 @@ package sn.diotali.tfe_usager_dgid;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import java.lang.reflect.Field;
 
 public class TfeMenu extends AppCompatActivity {
 
+    private AppBarConfiguration mAppBarConfiguration;
     ImageView tfe_menu_timbre, menu_autres;
     ImageView tfe_menu_quittance, menu_bar, menu_info;
     private Intent intent;
@@ -26,41 +37,15 @@ public class TfeMenu extends AppCompatActivity {
 
         getObjectById();
 
-        menu_bar.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(TfeMenu.this, menu_bar);
-                
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.profil:
-                                break;
-                            case R.id.deconnect:
-                                Intent intent = new Intent(getApplicationContext(), DiotaliLogin.class);
-                                startActivity(intent);
-                                finish();
-                        }
-                        return true;
-                    }
-                });
-
-                popup.show();
-            }
-        });
+        menu_bar.setOnClickListener(onButtonClickListener);
 
         tfe_menu_timbre.setOnClickListener(onButtonClickListener);
         tfe_menu_quittance.setOnClickListener(onButtonClickListener);
         menu_autres.setOnClickListener(onButtonClickListener);
         menu_info.setOnClickListener(onButtonClickListener);
     }
+
+
 
     private View.OnClickListener onButtonClickListener = new View.OnClickListener() {
         @Override
@@ -83,8 +68,12 @@ public class TfeMenu extends AppCompatActivity {
                     break;
 
                 case R.id.menu_info:
-                    intent = new Intent (getApplicationContext(), HistoriqueActivity.class);
+
+                    break;
+                case R.id.menu_bar:
+                    intent = new Intent (getApplicationContext(), NavBarActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                     break;
             }
         }

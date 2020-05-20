@@ -5,27 +5,42 @@ import sn.diotali.tfe_usager_dgid.utils.DiotaliUtils;
 
 public class User extends ServiceResult {
 
-    private String  matricule;
-    private String  phone;
+    private String token;
 
-    private String  centre;
-    private String  bureau;
-
-    private String login;
-    private String password;
-    private String role;
     private String firstName;
     private String lastName;
     private String address;
+    private String matricule;
+    private String phone;
+    private String nin;
+
+    private String codeActivation;
+
+    private String login;
+    private String newLogin;
+
+    private String actuelMp;
+    private String nouveauMp;
+
+    private String password;
+    private String newPassword;
+
+    private String email;
+    private String newEmail;
+
+    private String role;
+    private String type;
+    private int status;
+
+    private String  centre;
+    private String  bureau;
 
     private String userNumber;
 
     private Integer balance;
 
-    private String token;
     private String terminalNumber;
 
-    private int status;
     private String message;
 
     public User(){
@@ -178,24 +193,106 @@ public class User extends ServiceResult {
         this.message = message;
     }
 
+    public String getNin() {
+        return nin;
+    }
+
+    public void setNin(String nin) {
+        this.nin = nin;
+    }
+
+    public String getCodeActivation() {
+        return codeActivation;
+    }
+
+    public void setCodeActivation(String codeActivation) {
+        this.codeActivation = codeActivation;
+    }
+
+    public String getNewLogin() {
+        return newLogin;
+    }
+
+    public void setNewLogin(String newLogin) {
+        this.newLogin = newLogin;
+    }
+
+    public String getActuelMp() {
+        return actuelMp;
+    }
+
+    public void setActuelMp(String actuelMp) {
+        this.actuelMp = actuelMp;
+    }
+
+    public String getNouveauMp() {
+        return nouveauMp;
+    }
+
+    public void setNouveauMp(String nouveauMp) {
+        this.nouveauMp = nouveauMp;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNewEmail() {
+        return newEmail;
+    }
+
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
     @Override
     public String toString() {
         return "User{" +
-                "matricule='" + matricule + '\'' +
-                ", phone='" + phone + '\'' +
-                ", centre='" + centre + '\'' +
-                ", bureau='" + bureau + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
+                "token='" + token + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
+                ", matricule='" + matricule + '\'' +
+                ", phone='" + phone + '\'' +
+                ", nin='" + nin + '\'' +
+                ", codeActivation='" + codeActivation + '\'' +
+                ", login='" + login + '\'' +
+                ", newLogin='" + newLogin + '\'' +
+                ", actuelMp='" + actuelMp + '\'' +
+                ", nouveauMp='" + nouveauMp + '\'' +
+                ", password='" + password + '\'' +
+                ", newPassword='" + newPassword + '\'' +
+                ", email='" + email + '\'' +
+                ", newEmail='" + newEmail + '\'' +
+                ", role='" + role + '\'' +
+                ", type='" + type + '\'' +
+                ", status=" + status +
+                ", centre='" + centre + '\'' +
+                ", bureau='" + bureau + '\'' +
                 ", userNumber='" + userNumber + '\'' +
                 ", balance=" + balance +
-                ", token='" + token + '\'' +
                 ", terminalNumber='" + terminalNumber + '\'' +
-                ", status=" + status +
                 ", message='" + message + '\'' +
                 '}';
     }

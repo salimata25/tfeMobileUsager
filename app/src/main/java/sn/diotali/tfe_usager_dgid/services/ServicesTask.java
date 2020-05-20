@@ -6,18 +6,29 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
+
+import javax.net.ssl.SSLContext;
 
 import sn.diotali.tfe_usager_dgid.DiotaliMain;
 import sn.diotali.tfe_usager_dgid.R;
 import sn.diotali.tfe_usager_dgid.link.Dialog;
+import sn.diotali.tfe_usager_dgid.types.InscriptionRequest;
 import sn.diotali.tfe_usager_dgid.types.LoginRequest;
 import sn.diotali.tfe_usager_dgid.types.TransactionRequest;
 import sn.diotali.tfe_usager_dgid.types.TransactionResponse;
@@ -50,6 +61,30 @@ public class ServicesTask extends AsyncTask<ServiceParams, Integer, ServiceResul
             Log.d("doInBackground", service.getMethodName());
 
             RestTemplate restTemplate = new RestTemplate();
+            TrustStrategy acceptingTrustStrategy = new TrustStrategy() {
+                @Override
+                public boolean isTrusted(java.security.cert.X509Certificate[] x509Certificates, String s) {
+                    return true;
+                }
+            };
+
+            SSLContext sslContext = null;
+            try {
+                sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (KeyStoreException e) {
+                e.printStackTrace();
+            }
+            SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, new NoopHostnameVerifier());
+            CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(csf).build();
+            HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+            requestFactory.setHttpClient(httpClient);
+
+            restTemplate.setRequestFactory(requestFactory);
+
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ClientHttpRequestInterceptor clientHttpRequestInterceptors = (request, body, execution) -> {
                // request.getHeaders().setAll(service.getHeaders());
@@ -79,6 +114,24 @@ public class ServicesTask extends AsyncTask<ServiceParams, Integer, ServiceResul
                 HttpEntity<LoginRequest> credentials = new HttpEntity<>((LoginRequest) service.getMethodParams());
                 Log.d("ServicesTaskcredentials",credentials.toString());
                 String url = Constants.BASE_URL + Constants.Methods.LOGIN;
+                result = restTemplate.postForObject(url, credentials, User.class);
+                Log.d("ServicesTask---RESPONSE",result.toString());
+            }
+            else if (Constants.Methods.INSCRIRE.equals(service.getMethodName()))
+            {
+                Log.d("ServicesTask-INSCRIRE-",service.getMethodName());
+                HttpEntity<InscriptionRequest> credentials = new HttpEntity<>((InscriptionRequest) service.getMethodParams());
+                Log.d("ServicesTaskcredentials",credentials.toString());
+                String url = Constants.BASE_URL + Constants.Methods.INSCRIRE;
+                result = restTemplate.postForObject(url, credentials, User.class);
+                Log.d("ServicesTask---RESPONSE",result.toString());
+            }
+            else if (Constants.Methods.ACTIVERCOMPTE.equals(service.getMethodName()))
+            {
+                Log.d("ServicesTask-INSCRIRE-",service.getMethodName());
+                HttpEntity<InscriptionRequest> credentials = new HttpEntity<>((InscriptionRequest) service.getMethodParams());
+                Log.d("ServicesTaskcredentials",credentials.toString());
+                String url = Constants.BASE_URL + Constants.Methods.ACTIVERCOMPTE;
                 result = restTemplate.postForObject(url, credentials, User.class);
                 Log.d("ServicesTask---RESPONSE",result.toString());
             }

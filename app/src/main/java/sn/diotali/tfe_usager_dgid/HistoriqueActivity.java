@@ -1,7 +1,10 @@
 package sn.diotali.tfe_usager_dgid;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.text.SimpleDateFormat;
@@ -22,6 +25,13 @@ public class HistoriqueActivity extends AppCompatActivity {
         List<OneTimbrePanier> listTimbre = getLisData();
         ListView list_timbre = findViewById(R.id.list_timbre);
         list_timbre.setAdapter(new HistoriqueListAdapter(this, listTimbre));
+        list_timbre.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), InfoTimbreActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private List<OneTimbrePanier> getLisData() {
