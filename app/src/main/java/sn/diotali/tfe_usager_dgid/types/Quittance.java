@@ -13,24 +13,14 @@ public class Quittance implements Serializable {
     private String phone;
     private String nin;
     private String address;
-    private String numero;
-    private String numeroTransaction;
-
-    @JsonFormat( pattern = "dd/MM/yyyy HH:mm:ss")
-    private Date dateCreation =  new Date();
-    @JsonFormat( pattern = "dd/MM/yyyy HH:mm:ss")
-    private Date dateExpiration;
 
     public Quittance() { }
 
-    public Quittance(String firstName, String lastName, String phone, String nin, String numero,  String numeroTransaction) {
+    public Quittance(String firstName, String lastName, String phone, String nin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.nin = nin;
-
-        this.numero = numero;
-        this.numeroTransaction = numeroTransaction;
     }
 
     public String getFirstName() {
@@ -65,21 +55,6 @@ public class Quittance implements Serializable {
         this.nin = nin;
     }
 
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getNumeroTransaction() {
-        return numeroTransaction;
-    }
-
-    public void setNumeroTransaction(String numeroTransaction) {
-        this.numeroTransaction = numeroTransaction;
-    }
 
     public String getAddress() {
         return address;
@@ -89,23 +64,6 @@ public class Quittance implements Serializable {
         this.address = address;
     }
 
-    public Date getDateCreation() {
-        return dateCreation;
-    }
-
-    public void setDateCreation(Date dateCreation) {
-        this.dateCreation = dateCreation;
-    }
-
-    public Date getDateExpiration() {
-        return dateExpiration;
-    }
-
-    public void setDateExpiration(Date dateExpiration) {
-        this.dateExpiration = dateExpiration;
-    }
-
-    @Override
     public String toString() {
         return "Quittance{" +
                 "firstName='" + firstName + '\'' +
@@ -113,8 +71,6 @@ public class Quittance implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", nin='" + nin + '\'' +
                 ", address='" + address + '\'' +
-                ", numero='" + numero + '\'' +
-                ", numeroTransaction='" + numeroTransaction + '\'' +
                 '}';
     }
 }

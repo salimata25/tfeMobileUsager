@@ -1,33 +1,38 @@
 package sn.diotali.tfe_usager_dgid;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.MenuPopupHelper;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.ListView;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-public class TfeMenu extends AppCompatActivity {
+import sn.diotali.tfe_usager_dgid.services.ServiceParams;
+import sn.diotali.tfe_usager_dgid.services.ServiceResult;
+import sn.diotali.tfe_usager_dgid.services.ServicesTask;
+import sn.diotali.tfe_usager_dgid.types.HistoriqueAchat;
+import sn.diotali.tfe_usager_dgid.types.TransactionRequest;
+import sn.diotali.tfe_usager_dgid.types.TransactionResponse;
+import sn.diotali.tfe_usager_dgid.utils.Constants;
+import sn.diotali.tfe_usager_dgid.utils.HistoriqueListAdapter;
+
+public class TfeMenu extends DiotaliMain {
 
     private AppBarConfiguration mAppBarConfiguration;
     ImageView tfe_menu_timbre, menu_autres;
     ImageView tfe_menu_quittance, menu_bar, menu_info;
     private Intent intent;
+    List<HistoriqueAchat> listTimbre;
+    HistoriqueAchat historiqueAchat;
+    ListView listTimbreView;
 
 
     @Override
@@ -37,6 +42,25 @@ public class TfeMenu extends AppCompatActivity {
 
         getObjectById();
 
+        listTimbreView = findViewById(R.id.list_timbre);
+        listTimbreView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), InfoTimbreActivity.class);
+                intent.putExtra("INFO_TIMBRE", listTimbre.get(i));
+                startActivity(intent);
+            }
+        });
+
+        ServicesTask service = new ServicesTask(TfeMenu.this);
+        ServiceParams method = new ServiceParams();
+        method.setMethodName(Constants.Methods.HISTORIQUE_ACHAT);
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setToken(Constants.newUser.getToken());
+        Log.d(this.getClass().getName(),transactionRequest.toString());
+        method.setMethodParams(transactionRequest);
+        service.execute(method);
+
         menu_bar.setOnClickListener(onButtonClickListener);
 
         tfe_menu_timbre.setOnClickListener(onButtonClickListener);
@@ -44,8 +68,6 @@ public class TfeMenu extends AppCompatActivity {
         menu_autres.setOnClickListener(onButtonClickListener);
         menu_info.setOnClickListener(onButtonClickListener);
     }
-
-
 
     private View.OnClickListener onButtonClickListener = new View.OnClickListener() {
         @Override
@@ -95,4 +117,23 @@ public class TfeMenu extends AppCompatActivity {
         menu_info = findViewById(R.id.menu_info);
     }
 
+    @Override
+    public void sendTaskResponse(ServiceResult serviceResult) {
+        try {
+            if(Constants.ResponseStatus.OK == serviceResult.getStatus()){
+                TransactionResponse response = (TransactionResponse) serviceResult;
+
+                Log.d(this.getClass().getName(), "sendTaskResponse success " +response.toString());
+                listTimbre = response.getListUsers();
+                listTimbreView.setAdapter(new HistoriqueListAdapter(this, listTimbre));
+            } else {
+                Log.d(this.getClass().getName(), "sendTaskResponse error " +serviceResult);
+
+
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

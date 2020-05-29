@@ -4,12 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +18,7 @@ import java.text.SimpleDateFormat;
 import sn.diotali.tfe_usager_dgid.types.HistoriqueAchat;
 import sn.diotali.tfe_usager_dgid.utils.Constants;
 
-public class InfoTimbreActivity extends AppCompatActivity implements View.OnClickListener {
+public class InfoTimbreFinishActivity extends AppCompatActivity implements View.OnClickListener {
     HistoriqueAchat timbre;
     Bitmap bmpQrCode = null;
     ImageView qrCode;
@@ -30,13 +29,9 @@ public class InfoTimbreActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_timbre);
 
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.screenBrightness = 1.0f; // 0.0 - 1.0
-        getWindow().setAttributes(lp);
-
         findViewById(R.id.menu_bar).setOnClickListener(this);
 
-        timbre = (HistoriqueAchat) getIntent().getExtras().getSerializable("INFO_TIMBRE");
+        timbre = Constants.transactionResponse.getData();
 
         TextView libelle = findViewById(R.id.title_libele);
         TextView montant = findViewById(R.id.title_montant);

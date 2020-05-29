@@ -1,30 +1,36 @@
 package sn.diotali.tfe_usager_dgid.utils;
 
 import sn.diotali.tfe_usager_dgid.types.TransactionRequest;
+import sn.diotali.tfe_usager_dgid.types.TransactionResponse;
 import sn.diotali.tfe_usager_dgid.types.User;
 
 public class Constants {
 
-    public static String BASE_URL = "https://192.168.1.51:8031/tfe/access/mobile/";
+    public static String BASE_URL = "http://192.168.1.52:8031/tfe/";
 
     public static void newURL(final String ADDRESS_IP){
-        BASE_URL = "http://" + ADDRESS_IP +":8031/tfe/access/mobile/";
+        BASE_URL = "http://" + ADDRESS_IP +":8031/tfe/";
     }
-
-    public static final String QR_CODE_KEY = "6AC292FAA1315B4D858AB3A3D7D5933A";
 
 
     public static  class Methods{
-        public static final String ACHETER_TIMBRE = "acheter/timbre";
-        public static final String ACHETER_QUITTANCE = "acheter/quittance";
-        public static final String LOGIN = "connexion";
-        public static final String INSCRIRE = "usager/inscrire";
-        public static final String ACTIVERCOMPTE = "usager/inscrire/validation";
+        public static final String HISTORIQUE_ACHAT = "access/mobile/usager/historique/transaction";
+        public static final String ACHETER_TIMBRE = "clientmobile/acheter/timbre";
+        public static final String ACHETER_QUITTANCE = "clientmobile/acheter/quittance";
+        public static final String LOGIN = "access/mobile/connexion";
+        public static final String INSCRIRE = "access/mobile/usager/inscrire";
+        public static final String ACTIVERCOMPTE = "access/mobile/usager/inscrire/validation";
+        public static final String UPDATE_INFO = "access/mobile/usager/updateinfouser";
+        public static final String UPDATE_PWD = "access/mobile/usager/updatemepwd";
+        public static final String PWD_OUBLIE = "access/mobile/usager/acces/verification";
+        public static final String NEW_PWD = "access/mobile/usager/newpwd";
+        public static final String URL_QRCODE = "clientmobile/";
     }
 
     public static class Menu {
         public static final String TIMBRE = "TIMBRE";
         public static final String QUITTANCE = "QUITTANCE";
+        public static final String AUTRES_MONTANTS = "AUTRES";
     }
 
     public static class ResponseStatus {
@@ -42,10 +48,17 @@ public class Constants {
     }
 
     public class ActivityRequest {
-        public static final int RECAPITULATIF = 1;
-        public static final int PRINT_CHOICE = 3;
-        public static final int FINAL_DISPLAY = 4;
-        public static final int REQUEST_CONNECT_BT_PRINTER = 10;
+        public static final int DETAILQUITTANCE = 1;
+        public static final int DETAILTIMBRE = 2;
+        public static final int VALIDATION = 3;
+        public static final int AUTRES_MONTANTS = 4;
+        public static final int INSERER_MONTANT = 5;
+        public static final int PAIEMENTMODE = 6;
+        public static final int PAIEMENTMOBILE = 7;
+        public static final int PAIEMENTCARTE = 8;
+        public static final int FINAL_DISPLAY = 9;
+        public static final int CODE_PWD = 10;
+        public static final int NEW_PWD = 11;
     }
 
     public class ResponseActivty {
@@ -56,6 +69,7 @@ public class Constants {
 
     public static User newUser;
     public static TransactionRequest newTransaction;
+    public static TransactionResponse transactionResponse;
 
 
 }

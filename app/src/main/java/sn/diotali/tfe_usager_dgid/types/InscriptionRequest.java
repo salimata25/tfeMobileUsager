@@ -54,12 +54,7 @@ public class InscriptionRequest  extends MethodParams {
         this.terminalNumber = DiotaliUtils.getSerialNumber();
     }
 
-    public InscriptionRequest(String login, String password) {
-        super();
-        this.login = login;
-        this.password = password;
-        this.terminalNumber = DiotaliUtils.getSerialNumber();
-    }
+
 
     public String getMatricule() {
         return matricule;
@@ -279,6 +274,36 @@ public class InscriptionRequest  extends MethodParams {
                 '}';
     }
 
+
+    public InscriptionRequest(String phone, String email) {
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public InscriptionRequest(String token, String actuelMp, String nouveauMp) {
+        this.token = token;
+        this.actuelMp = actuelMp;
+        this.nouveauMp = nouveauMp;
+    }
+
+    public InscriptionRequest(String token, String phone, String email, String codeActivation) {
+        this.token = token;
+        this.phone = phone;
+        this.email = email;
+        this.codeActivation = codeActivation;
+    }
+
+
+    public InscriptionRequest(String token, String prenom, String nom, String adresse, String tel, String cni, String email, String justeforupdate) {
+        this.token = token;
+        this.firstName = prenom;
+        this.lastName = nom;
+        this.address = adresse;
+        this.phone = tel;
+        this.nin = cni;
+        this.email = email;
+    }
+
     public InscriptionRequest(String firstName, String lastName, String address, String phone, String nin, String password, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -288,4 +313,6 @@ public class InscriptionRequest  extends MethodParams {
         this.password = password;
         this.email = email;
     }
+
+    
 }

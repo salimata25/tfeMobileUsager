@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import android.app.Dialog;
-import android.widget.Toast;
 
 import sn.diotali.tfe_usager_dgid.eventActions.DoubleTapCallback;
 import sn.diotali.tfe_usager_dgid.eventActions.DoubleTapListener;
@@ -32,7 +31,7 @@ public class DiotaliLogin extends DiotaliMain implements DoubleTapCallback {
 
     private EditText login;
     private EditText password;
-    private TextView errorView;
+    private TextView errorView, pwd_oublie;
 
     SharedPreferences sharedPreferences;
     ImageView id_logoImage;
@@ -42,83 +41,82 @@ public class DiotaliLogin extends DiotaliMain implements DoubleTapCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diotali_login);
-
-        Constants.newUser = new User();
-        Constants.newUser.setTerminalNumber(DiotaliUtils.getSerialNumber());
-
-        Log.i("------newUser------",Constants.newUser.toString());
-        login = findViewById(R.id.edt_login);
-        password = findViewById(R.id.edt_password);
-        Button btnConnect = findViewById(R.id.btn_connect);
-        errorView = findViewById(R.id.txt_v_error);//5215628882
-        errorView.setVisibility(View.INVISIBLE);
-
-        btnConnect.setOnClickListener(new ClickConnect());
-        login.addTextChangedListener(new ChangeParams());
-        password.addTextChangedListener(new ChangeParams());
-
-
 
         // Admin
         sharedPreferences = getSharedPreferences("MyConfigMarchand", MODE_PRIVATE);
-        String urlEncours = sharedPreferences.getString("NAME","url");
 
-        if (urlEncours.equals("url")){
-            Constants.newURL("192.168.1.52");
-            sharedPreferences.edit().putString("NAME", "192.168.1.52").commit();
-            Toast.makeText(this,"loading details not found",Toast.LENGTH_SHORT).show();
+        String tokenStorage = sharedPreferences.getString("TokenStorage","tokenStorage");
+        String seConnecter = sharedPreferences.getString("SeConnecter","non");
+
+        if (tokenStorage.equals("tokenStorage") && seConnecter.equals("non")){
+            sharedPreferences.edit().putString("SeConnecter", "non").commit();
+            Intent intent = new Intent(this, AccueilActivity.class);
+            startActivity(intent);
         }
         else {
-            Constants.newURL(urlEncours);
+            sharedPreferences.edit().putString("SeConnecter", "non").commit();
+            setContentView(R.layout.activity_diotali_login);
 
-            Toast.makeText(this,"loading details successfully",Toast.LENGTH_SHORT).show();
-        }
-        myDialogSign = new Dialog(this);
-        id_logoImage = (ImageView)findViewById(R.id.img_contravention);
-        id_logoImage.setOnClickListener(new DoubleTapListener(this));
+            String emailStorage = sharedPreferences.getString("EmailStorage","emailStorage");
+            String roleStorage = sharedPreferences.getString("RoleStorage", "roleStorage");
+            String firstNameStorage = sharedPreferences.getString("FirstNameStorage", "firstNameStorage");
+            String lastNameStorage = sharedPreferences.getString("LastNameStorage", "lastNameStorage");
+            String addressStorage = sharedPreferences.getString("AddressStorage", "addressStorage");
+            String phoneStorage = sharedPreferences.getString("PhoneStorage", "phoneStorage");
+            String ninStorage = sharedPreferences.getString("NinStorage", "ninStorage");
+
+            Constants.newUser = new User();
+            Constants.newUser.setToken(tokenStorage);
+            Constants.newUser.setTerminalNumber(DiotaliUtils.getSerialNumber());
+            Constants.newUser.setEmail(emailStorage);
+            Constants.newUser.setRole(roleStorage);
+            Constants.newUser.setFirstName(firstNameStorage);
+            Constants.newUser.setLastName(lastNameStorage);
+            Constants.newUser.setAddress(addressStorage);
+            Constants.newUser.setPhone(phoneStorage);
+            Constants.newUser.setNin(ninStorage);
 
 
-
-
-
-
-    }
-/*
-    void processValue(Bitmap bmpQr) {
-        bmpQrCode = bmpQr;
-        Log.e("Handler2.processValue", " bmpQrCode status");
-        if(bmpQrCode == null){
-            Log.d(DiotaliLogin.class.getName()+" bmpQrCode status- - -", "null DiotaliUtils.encryptData(Constants.QR_CODE_KEY,qrCodeContent)");
-        }else{
-            Log.d(DiotaliLogin.class.getName()+" bmpQrCode status- - -", "not null bmpQrCode)");
-        }
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        Bitmap bmImage;
-        public DownloadImageTask(Bitmap bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error doInBackground", e.getMessage());
+            Log.i("------newUser------",Constants.newUser.toString());
+            login = findViewById(R.id.edt_login);
+            if ( !emailStorage.equals("emailStorage")){
+                login.setText(Constants.newUser.getEmail());
             }
-            return mIcon11;
+
+
+            password = findViewById(R.id.edt_password);
+            Button btnConnect = findViewById(R.id.btn_connect);
+            errorView = findViewById(R.id.txt_v_error);//5215628882
+            errorView.setVisibility(View.INVISIBLE);
+
+            btnConnect.setOnClickListener(new ClickConnect());
+            login.addTextChangedListener(new ChangeParams());
+            password.addTextChangedListener(new ChangeParams());
+
+            pwd_oublie = findViewById(R.id.txt_pwd_oublie);
+            pwd_oublie.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(DiotaliLogin.this, ReinitialiserPwdActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            String urlEncours = sharedPreferences.getString("NAME","url");
+            if (urlEncours.equals("url")){
+                Constants.newURL("192.168.1.51");
+                sharedPreferences.edit().putString("NAME", "192.168.1.51").commit();
+            }
+            else {
+                Constants.newURL(urlEncours);
+            }
+
+            myDialogSign = new Dialog(this);
+            id_logoImage = (ImageView)findViewById(R.id.img_contravention);
+            id_logoImage.setOnClickListener(new DoubleTapListener(this));
         }
 
-        protected void onPostExecute(Bitmap result) {
-            bmImage = result;
-            processValue(bmImage);
-        }
-    }*/
-
+    }
 
     private class ClickConnect implements View.OnClickListener {
 
@@ -136,10 +134,18 @@ public class DiotaliLogin extends DiotaliMain implements DoubleTapCallback {
                 password.setError("Merci de saisir le mot de passe");
             } else {
 
-                Intent intent = new Intent(DiotaliLogin.this, TfeMenu.class);
-                //Constants.newUser = response;
-                startActivity(intent);
+                ServicesTask task =  new ServicesTask(DiotaliLogin.this);
+                LoginRequest params = new LoginRequest(loginStr,passwordStr);
+                ServiceParams service = new ServiceParams();
+                service.setMethodName(Constants.Methods.LOGIN);
+                Log.d("login  params",params.toString());
+                service.setMethodParams(params);
+                task.execute(service);
             }
+
+
+
+
         }
     }
 
@@ -150,6 +156,17 @@ public class DiotaliLogin extends DiotaliMain implements DoubleTapCallback {
             if (Constants.Methods.LOGIN.equals(serviceResult.getMethod())) {
                 if (Constants.ResponseStatus.OK == serviceResult.getStatus()) {
                     User response = (User) serviceResult;
+
+                    sharedPreferences = getSharedPreferences("MyConfigMarchand", MODE_PRIVATE);
+                    sharedPreferences.edit().putString("TokenStorage", response.getToken()).commit();
+                    sharedPreferences.edit().putString("RoleStorage", response.getRole()).commit();
+                    sharedPreferences.edit().putString("FirstNameStorage", response.getFirstName()).commit();
+                    sharedPreferences.edit().putString("LastNameStorage", response.getLastName()).commit();
+                    sharedPreferences.edit().putString("AddressStorage", response.getAddress()).commit();
+                    sharedPreferences.edit().putString("PhoneStorage", response.getPhone()).commit();
+                    sharedPreferences.edit().putString("NinStorage", response.getNin()).commit();
+                    sharedPreferences.edit().putString("EmailStorage", response.getEmail()).commit();
+
                     Intent intent = new Intent(this, TfeMenu.class);
                     Constants.newUser = response;
                     startActivity(intent);
@@ -254,7 +271,5 @@ public class DiotaliLogin extends DiotaliMain implements DoubleTapCallback {
             }
         }
     };
-
-
 
 }

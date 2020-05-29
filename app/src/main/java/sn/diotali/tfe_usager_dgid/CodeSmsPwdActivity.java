@@ -16,7 +16,7 @@ import sn.diotali.tfe_usager_dgid.types.InscriptionRequest;
 import sn.diotali.tfe_usager_dgid.types.User;
 import sn.diotali.tfe_usager_dgid.utils.Constants;
 
-public class CodeSmsActivity extends DiotaliMain implements View.OnClickListener{
+public class CodeSmsPwdActivity extends DiotaliMain implements View.OnClickListener{
 
     EditText edt_code;
     TextView txt_error;
@@ -27,13 +27,14 @@ public class CodeSmsActivity extends DiotaliMain implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_code_sms);
+        setContentView(R.layout.activity_code_sms_pwd);
 
         edt_code = findViewById(R.id.edt_code);
 
         txt_error = findViewById(R.id.txt_v_error);
         txt_error.setVisibility(View.INVISIBLE);
 
+        Log.d("USER PHONE", Constants.newUser.toString());
 
         btn_valider = findViewById(R.id.btn_valider);
         btn_valider.setOnClickListener(this);
@@ -52,11 +53,11 @@ public class CodeSmsActivity extends DiotaliMain implements View.OnClickListener
                 String replacement = "";
 
                 if (code.isEmpty() || code.replaceAll(regex, replacement).isEmpty()) {
-                    edt_code.setError("Code d'activation");
+                    edt_code.setError("Code de vérification");
                 } else {
                     InscriptionRequest params = new InscriptionRequest(null, Constants.newUser.getPhone(), null, code);
                     Log.i(this.getClass().getName(), params.toString());
-                    ServicesTask task =  new ServicesTask(CodeSmsActivity.this);
+                    ServicesTask task =  new ServicesTask(CodeSmsPwdActivity.this);
                     ServiceParams service = new ServiceParams();
                     service.setMethodName(Constants.Methods.ACTIVERCOMPTE);
                     Log.d("login  params",params.toString());
@@ -79,7 +80,6 @@ public class CodeSmsActivity extends DiotaliMain implements View.OnClickListener
                     User response = (User) serviceResult;
 
                     sharedPreferences = getSharedPreferences("MyConfigMarchand", MODE_PRIVATE);
-                    sharedPreferences.edit().putString("TokenStorage", response.getToken()).commit();
                     sharedPreferences.edit().putString("RoleStorage", response.getRole()).commit();
                     sharedPreferences.edit().putString("FirstNameStorage", response.getFirstName()).commit();
                     sharedPreferences.edit().putString("LastNameStorage", response.getLastName()).commit();
@@ -88,7 +88,7 @@ public class CodeSmsActivity extends DiotaliMain implements View.OnClickListener
                     sharedPreferences.edit().putString("NinStorage", response.getNin()).commit();
                     sharedPreferences.edit().putString("EmailStorage", response.getEmail()).commit();
 
-                    Intent intent = new Intent(this, DiotaliLogin.class);
+                    Intent intent = new Intent(this, PwdOublieActivity.class);
                     Constants.newUser = response;
                     startActivity(intent);
                 } else {
@@ -103,5 +103,6 @@ public class CodeSmsActivity extends DiotaliMain implements View.OnClickListener
             e.printStackTrace();
         }
     }
+
 
 }

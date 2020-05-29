@@ -1,6 +1,7 @@
 package sn.diotali.tfe_usager_dgid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 public class AccueilActivity extends AppCompatActivity {
     TextView txt_connexion;
     Button btn_inscription;
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,11 @@ public class AccueilActivity extends AppCompatActivity {
         txt_connexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                sharedPreferences = getSharedPreferences("MyConfigMarchand", MODE_PRIVATE);
+                sharedPreferences.edit().putString("SeConnecter", "oui").commit();
+
+
                 Intent intent = new Intent(AccueilActivity.this, DiotaliLogin.class);
                 startActivity(intent);
             }

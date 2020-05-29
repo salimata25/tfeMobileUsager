@@ -4,12 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 
 import sn.diotali.tfe_usager_dgid.types.Quittance;
 import sn.diotali.tfe_usager_dgid.types.TransactionRequest;
@@ -18,7 +17,6 @@ import sn.diotali.tfe_usager_dgid.utils.Constants;
 public class TfeQuittanceActivity extends AppCompatActivity {
 
     ImageView menu_bar;
-    ImageView btnRetour;
     Button btn_valider;
     EditText firstName;
     EditText lastName;
@@ -46,19 +44,20 @@ public class TfeQuittanceActivity extends AppCompatActivity {
                 overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
         });
-
+        Log.d(this.getClass().getName(), "ClickTfeButton sendTaskResponse 1");
         btn_valider.setOnClickListener(new ClickTfeButton());
-        //btnRetour.setOnClickListener(new ClickTfeButton());
-
     }
+
 
     private class ClickTfeButton implements Button.OnClickListener {
 
         @Override
         public void onClick(View v) {
+            Log.d(this.getClass().getName(), "ClickTfeButton sendTaskResponse 2");
             switch (v.getId()){
                 case R.id.btn_valider : {
-                    /*if (firstName.getText().toString() == null || firstName.getText().toString().replaceAll(" ", "").isEmpty()) {
+                    Log.d(this.getClass().getName(), "ClickTfeButton sendTaskResponse 3");
+                    if (firstName.getText().toString() == null || firstName.getText().toString().replaceAll(" ", "").isEmpty()) {
                         firstName.setError(getResources().getString(R.string.client_firstname));
                     } else if (lastName.getText().toString() == null || lastName.getText().toString().replaceAll(" ", "").isEmpty()) {
                         lastName.setError(getResources().getString(R.string.client_lastname));
@@ -67,18 +66,25 @@ public class TfeQuittanceActivity extends AppCompatActivity {
                     } else if (nin.getText().toString() == null || nin.getText().toString().replaceAll(" ", "").isEmpty()) {
                         nin.setError(getResources().getString(R.string.client_nin));
                     }
-                    else{*/
+                    else{
+                        Log.d(this.getClass().getName(), "ClickTfeButton sendTaskResponse 4");
+                        Quittance quittance = new Quittance();
+                        quittance.setFirstName(firstName.getText().toString());
+                        quittance.setLastName(lastName.getText().toString());
+                        quittance.setPhone(phone.getText().toString());
+                        quittance.setNin(nin.getText().toString());
+                        quittance.setAddress("address");
 
+                        Constants.newTransaction.addQuittance(quittance);
+                        Constants.newTransaction.setMontantTotal(20000);
 
                         Intent intent = new Intent(TfeQuittanceActivity.this, DetailsQuittanceActivity.class);
-                        startActivity(intent);
-                    //}
+                        startActivityForResult(intent,Constants.ActivityRequest.DETAILQUITTANCE);
+                        Log.d(this.getClass().getName(), "ClickTfeButton sendTaskResponse 5");
+                    }
 
                     break;
-
                 }
-
-
             }
         }
     }
@@ -89,31 +95,24 @@ public class TfeQuittanceActivity extends AppCompatActivity {
             switch(resultCode){
                 case Constants.ResponseActivty.OK :{
                     switch(requestCode){
-                        case Constants.ActivityRequest.PRINT_CHOICE :{
+                        case Constants.ActivityRequest.DETAILQUITTANCE :{
                             Intent intent = new Intent(this,ValidationAchatQuittanceActivity.class);
-                            startActivityForResult(intent,Constants.ActivityRequest.FINAL_DISPLAY);
+                            startActivityForResult(intent,Constants.ActivityRequest.VALIDATION);
                             break;
                         }
+                        case Constants.ActivityRequest.VALIDATION :{
+                            Intent intent = new Intent(this,ModePaiementActivity.class);
+                            startActivityForResult(intent,Constants.ActivityRequest.PAIEMENTMODE);
+                            break;
+                        }
+                        case Constants.ActivityRequest.PAIEMENTMODE :{
+                            Intent intent = new Intent(this,PaiementMobileActivity.class);
+                            startActivityForResult(intent,Constants.ActivityRequest.PAIEMENTMOBILE);
+                            break;
+                        }
+
 
                     }
-
-                }
-                case Constants.ResponseActivty.NOK :{
-                    switch(requestCode){
-                        case Constants.ActivityRequest.RECAPITULATIF :{
-
-                            break;
-                        }
-                        case Constants.ActivityRequest.PRINT_CHOICE :{
-
-                            break;
-                        }
-                        case Constants.ActivityRequest.FINAL_DISPLAY:{
-
-                            break;
-                        }
-                    }
-
                 }
                 default:{
                     switch (requestCode) {
@@ -133,12 +132,12 @@ public class TfeQuittanceActivity extends AppCompatActivity {
 
     public void getEllementsById(){
         btn_valider = findViewById(R.id.btn_valider);
-        //btnRetour = findViewById(R.id.btn_return);
 
         firstName = (EditText) findViewById(R.id.labelFirstName);
         lastName = (EditText) findViewById(R.id.labelLastName);
         phone = (EditText) findViewById(R.id.labelPhone);
         nin = (EditText) findViewById(R.id.labelNin);
     }
+
 
 }

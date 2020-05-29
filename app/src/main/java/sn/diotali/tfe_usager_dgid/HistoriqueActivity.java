@@ -1,51 +1,88 @@
 package sn.diotali.tfe_usager_dgid;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import sn.diotali.tfe_usager_dgid.types.OneTimbrePanier;
+import sn.diotali.tfe_usager_dgid.services.ServiceParams;
+import sn.diotali.tfe_usager_dgid.services.ServiceResult;
+import sn.diotali.tfe_usager_dgid.services.ServicesTask;
+import sn.diotali.tfe_usager_dgid.types.HistoriqueAchat;
+import sn.diotali.tfe_usager_dgid.types.TransactionRequest;
+import sn.diotali.tfe_usager_dgid.types.TransactionResponse;
+import sn.diotali.tfe_usager_dgid.utils.Constants;
 import sn.diotali.tfe_usager_dgid.utils.HistoriqueListAdapter;
 
-public class HistoriqueActivity extends AppCompatActivity {
+public class HistoriqueActivity extends DiotaliMain implements View.OnClickListener{
+
+    List<HistoriqueAchat> listTimbre;
+    ListView listTimbreView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historique);
+        Log.d(this.getClass().getName(), "HistoriqueActivity ");
 
-        List<OneTimbrePanier> listTimbre = getLisData();
-        ListView list_timbre = findViewById(R.id.list_timbre);
-        list_timbre.setAdapter(new HistoriqueListAdapter(this, listTimbre));
-        list_timbre.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        findViewById(R.id.menu_bar).setOnClickListener(this);
+
+        listTimbreView = findViewById(R.id.list_timbre);
+        listTimbreView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), InfoTimbreActivity.class);
+                intent.putExtra("INFO_TIMBRE", listTimbre.get(i));
                 startActivity(intent);
             }
         });
+
+        ServicesTask service = new ServicesTask(HistoriqueActivity.this);
+        ServiceParams method = new ServiceParams();
+        method.setMethodName(Constants.Methods.HISTORIQUE_ACHAT);
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setToken(Constants.newUser.getToken());
+        Log.d(this.getClass().getName(),transactionRequest.toString());
+        method.setMethodParams(transactionRequest);
+        service.execute(method);
+
+
     }
 
-    private List<OneTimbrePanier> getLisData() {
-        List<OneTimbrePanier> list = new ArrayList<OneTimbrePanier>();
-        Date date = new Date();
-
-        OneTimbrePanier timbre1 = new OneTimbrePanier("consommé", "Quittance", 20000, date);
-        OneTimbrePanier timbre2 = new OneTimbrePanier("non consommé", "Timbre fiscal", 5000, date);
-        OneTimbrePanier timbre3 = new OneTimbrePanier("consommé", "Autre montant", 200000, date);
-
-        list.add(timbre1);
-        list.add(timbre2);
-        list.add(timbre3);
-
-        return list;
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.menu_bar:
+                Intent intent = new Intent (getApplicationContext(), NavBarActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                break;
+        }
     }
+
+
+    @Override
+    public void sendTaskResponse(ServiceResult serviceResult) {
+        try {
+            if(Constants.ResponseStatus.OK == serviceResult.getStatus()){
+                TransactionResponse response = (TransactionResponse) serviceResult;
+
+                Log.d(this.getClass().getName(), "sendTaskResponse success " +response.toString());
+                listTimbre = response.getListUsers();
+                listTimbreView.setAdapter(new HistoriqueListAdapter(this, listTimbre));
+            } else {
+                Log.d(this.getClass().getName(), "sendTaskResponse error " +serviceResult);
+
+
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

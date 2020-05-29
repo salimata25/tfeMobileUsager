@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Achat de timbre fiscal"
+            android:text="Autres montants"
             android:textColor="@color/colorWhite"
             android:textStyle="normal"
             android:textSize="22sp"

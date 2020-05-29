@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_linear"
+    android:background="@drawable/background_achat"
     tools:context=".DiotaliLogin">
 
     <android.support.constraint.ConstraintLayout
@@ -27,7 +27,7 @@
             android:layout_height="180dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="3dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="170dp"
             android:adjustViewBounds="false"
             android:contentDescription="@string/app_name"
             android:cropToPadding="false"
@@ -62,7 +62,6 @@
             android:ems="20"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
-            android:text="sdimanka@diotali.com"
             android:hint="@string/login"
             android:inputType="text"
             android:textSize="@dimen/dimen_text_size_normal_login"
@@ -78,12 +77,11 @@
             android:layout_width="@dimen/dimen_tf_login_width"
             android:layout_height="@dimen/dimen_tf_login_height"
             android:layout_marginBottom="18dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/edt_background2"
             android:ems="20"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
-            android:text="admingeneral"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textSize="@dimen/dimen_text_size_normal_login"
@@ -98,8 +96,8 @@
             android:id="@+id/btn_connect"
             android:layout_width="@dimen/dimen_tf_login_width"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="29dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/btn_background"
             android:text="@string/connecter"
@@ -109,6 +107,15 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edt_password" />
+
+        <TextView
+            android:id="@+id/txt_pwd_oublie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:text="Mot de passe oublié ?"
+            android:textColor="#755427"
+            android:layout_gravity="center_horizontal"/>
 
     </LinearLayout>
 

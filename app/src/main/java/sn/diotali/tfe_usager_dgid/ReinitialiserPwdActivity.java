@@ -2,10 +2,11 @@ package sn.diotali.tfe_usager_dgid;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -16,80 +17,79 @@ import sn.diotali.tfe_usager_dgid.types.InscriptionRequest;
 import sn.diotali.tfe_usager_dgid.types.User;
 import sn.diotali.tfe_usager_dgid.utils.Constants;
 
-public class CodeSmsActivity extends DiotaliMain implements View.OnClickListener{
-
-    EditText edt_code;
+public class ReinitialiserPwdActivity extends DiotaliMain implements View.OnClickListener {
+    EditText email, phone;
     TextView txt_error;
-    Button btn_valider;
-
     SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_code_sms);
+        setContentView(R.layout.activity_reinitialiser_pwd);
 
-        edt_code = findViewById(R.id.edt_code);
+        findViewById(R.id.btn_connect).setOnClickListener(this);
+
+        email = findViewById(R.id.edt_email);
+        phone = findViewById(R.id.edt_tel);
 
         txt_error = findViewById(R.id.txt_v_error);
         txt_error.setVisibility(View.INVISIBLE);
-
-
-        btn_valider = findViewById(R.id.btn_valider);
-        btn_valider.setOnClickListener(this);
-        findViewById(R.id.btn_renvoie).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_valider:
+            case R.id.btn_connect:
                 txt_error.setVisibility(View.INVISIBLE);
 
-                String code = edt_code.getText().toString();
+                String mail = email.getText().toString();
+                String tel = phone.getText().toString();
 
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 String regex = " ";
                 String replacement = "";
 
-                if (code.isEmpty() || code.replaceAll(regex, replacement).isEmpty()) {
-                    edt_code.setError("Code d'activation");
+                if (mail.isEmpty() || mail.replaceAll(regex, replacement).isEmpty()) {
+                    email.setError("Adresse email");
+                }else if (!mail.matches(emailPattern)) {
+                    email.setError("Email invalide");
+                }  else if (tel.isEmpty() || tel.replaceAll(regex, replacement).isEmpty()) {
+                    phone.setError("Numéro de téléphone");
                 } else {
-                    InscriptionRequest params = new InscriptionRequest(null, Constants.newUser.getPhone(), null, code);
+                    InscriptionRequest params = new InscriptionRequest(tel, mail);
                     Log.i(this.getClass().getName(), params.toString());
-                    ServicesTask task =  new ServicesTask(CodeSmsActivity.this);
+                    /*Intent intent = new Intent(this, CodeSmsPwdActivity.class);
+                    startActivity(intent);*/
+                    ServicesTask task =  new ServicesTask(ReinitialiserPwdActivity.this);
                     ServiceParams service = new ServiceParams();
-                    service.setMethodName(Constants.Methods.ACTIVERCOMPTE);
+                    service.setMethodName(Constants.Methods.PWD_OUBLIE);
                     Log.d("login  params",params.toString());
                     service.setMethodParams(params);
                     task.execute(service);
                 }
-                break;
-            case R.id.btn_renvoie:
+
                 break;
         }
     }
 
     @Override
     public void sendTaskResponse(ServiceResult serviceResult) {
-
         try {
             Log.d("DIOTALI LOGIN", "receiving response");
-            if (Constants.Methods.ACTIVERCOMPTE.equals(serviceResult.getMethod())) {
+            if (Constants.Methods.PWD_OUBLIE.equals(serviceResult.getMethod())) {
                 if (Constants.ResponseStatus.OK == serviceResult.getStatus()) {
                     User response = (User) serviceResult;
-
+                    Log.d("DIOTALI sendTaskRespon", response.toString());
                     sharedPreferences = getSharedPreferences("MyConfigMarchand", MODE_PRIVATE);
-                    sharedPreferences.edit().putString("TokenStorage", response.getToken()).commit();
-                    sharedPreferences.edit().putString("RoleStorage", response.getRole()).commit();
-                    sharedPreferences.edit().putString("FirstNameStorage", response.getFirstName()).commit();
-                    sharedPreferences.edit().putString("LastNameStorage", response.getLastName()).commit();
-                    sharedPreferences.edit().putString("AddressStorage", response.getAddress()).commit();
                     sharedPreferences.edit().putString("PhoneStorage", response.getPhone()).commit();
-                    sharedPreferences.edit().putString("NinStorage", response.getNin()).commit();
                     sharedPreferences.edit().putString("EmailStorage", response.getEmail()).commit();
+                    Constants.newUser = new User();
+                    Constants.newUser.setEmail(response.getEmail());
+                    Constants.newUser.setPhone(response.getPhone());
 
-                    Intent intent = new Intent(this, DiotaliLogin.class);
-                    Constants.newUser = response;
+                    Log.d("USER PHONE", Constants.newUser.toString());
+
+                    Intent intent = new Intent(this, CodeSmsPwdActivity.class);
                     startActivity(intent);
                 } else {
                     Log.d("LOGIN", "login error");
@@ -103,5 +103,6 @@ public class CodeSmsActivity extends DiotaliMain implements View.OnClickListener
             e.printStackTrace();
         }
     }
+
 
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_achat"
-    tools:context=".AutreMontantActivity">
+    tools:context=".FinishActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Autres montants"
+            android:text="Achat de quittance passport"
             android:textColor="@color/colorWhite"
             android:textStyle="normal"
             android:textSize="22sp"
@@ -87,43 +87,24 @@
             android:layout_height="360dp"
             android:orientation="vertical"
             android:background="@drawable/textview_border"
+            android:padding="0dp"
             android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginBottom="25dp"
-            android:layout_marginStart="30dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/trait_2">
+            app:layout_constraintTop_toBottomOf="@id/trait_2"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            <TextView
-                android:id="@+id/title_paiement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vous souhaitez acheter :"
-                android:gravity="center"
+            <ImageView
+                android:id="@+id/img_finish"
+                android:layout_width="250dp"
+                android:layout_height="300dp"
+                android:contentDescription="@string/img_success"
                 android:layout_gravity="center_horizontal"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@color/colorBlack"
-                android:layout_marginTop="10dp"/>
-
-            <Button
-                android:id="@+id/choix_droit_enregistrement"
-                android:layout_width="@dimen/dimen_btn1_width"
-                android:layout_height="@dimen/dimen_btn1_height"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/enregistrement" />
-
-            <Button
-                android:id="@+id/choix_mutation"
-                android:layout_width="@dimen/dimen_btn1_width"
-                android:layout_height="@dimen/dimen_btn1_height"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/mutation"
-                android:layout_gravity="center_horizontal" />
-
+                app:srcCompat="@drawable/succes"/>
+            
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>

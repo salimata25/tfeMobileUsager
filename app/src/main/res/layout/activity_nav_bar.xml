@@ -160,12 +160,49 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/trait_3"
+            android:id="@+id/trait_6"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:src="@drawable/trait_fin"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@id/menu_compte"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/menu_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/trait_6"
+            app:layout_constraintLeft_toLeftOf="parent">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/icone_pwd"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Modifier le mot de passe"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/trait_3"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/trait_fin"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/menu_pwd"
             app:layout_constraintLeft_toLeftOf="parent"/>
 
         <LinearLayout

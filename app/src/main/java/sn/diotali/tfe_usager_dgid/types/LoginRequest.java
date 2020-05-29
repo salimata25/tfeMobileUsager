@@ -5,15 +5,15 @@ import sn.diotali.tfe_usager_dgid.utils.DiotaliUtils;
 
 public class LoginRequest  extends MethodParams {
 
-    private String login;
+    private String emailOrPhone;
     private String password;
     private String terminalNumber;
 
 
 
-    public LoginRequest(String login, String password){
+    public LoginRequest(String emailOrPhone, String password){
         super();
-        this.login = login;
+        this.emailOrPhone = emailOrPhone;
         this.password = password;
         this.terminalNumber = DiotaliUtils.getSerialNumber();
     }
@@ -22,12 +22,12 @@ public class LoginRequest  extends MethodParams {
         super();
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmailOrPhone() {
+        return emailOrPhone;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmailOrPhone(String emailOrPhone) {
+        this.emailOrPhone = emailOrPhone;
     }
 
     public String getPassword() {
@@ -49,7 +49,7 @@ public class LoginRequest  extends MethodParams {
     @Override
     public String toString() {
         return "LoginRequest{" +
-                "login='" + login + '\'' +
+                "emailOrPhone='" + emailOrPhone + '\'' +
                 ", password='" + password + '\'' +
                 ", terminalNumber='" + terminalNumber + '\'' +
                 '}';

@@ -1,8 +1,6 @@
 package sn.diotali.tfe_usager_dgid;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -54,6 +52,7 @@ public class InscriptionActivity extends DiotaliMain {
                 String pwd = txt_pwd.getText().toString();
                 String confirm_pwd = txt_confirm_pwd.getText().toString();
 
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 String regex = " ";
                 String replacement = "";
 
@@ -65,6 +64,8 @@ public class InscriptionActivity extends DiotaliMain {
                     txt_prenom.setError("Prénom");
                 } else if (email.isEmpty() || email.replaceAll(regex, replacement).isEmpty()) {
                     txt_email.setError("Email");
+                }else if (!email.matches(emailPattern)) {
+                    txt_email.setError("Email invalide");
                 } else if (tel.isEmpty() || tel.replaceAll(regex, replacement).isEmpty()) {
                     txt_tel.setError("Téléphone");
                 } else if (adresse.isEmpty() || adresse.replaceAll(regex, replacement).isEmpty()) {

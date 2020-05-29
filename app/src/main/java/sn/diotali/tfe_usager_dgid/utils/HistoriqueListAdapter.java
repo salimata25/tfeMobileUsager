@@ -1,7 +1,8 @@
 package sn.diotali.tfe_usager_dgid.utils;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +11,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import sn.diotali.tfe_usager_dgid.R;
-import sn.diotali.tfe_usager_dgid.types.OneTimbrePanier;
+import sn.diotali.tfe_usager_dgid.types.HistoriqueAchat;
 
 public class HistoriqueListAdapter extends BaseAdapter {
 
-    private List<OneTimbrePanier> listData;
+    private List<HistoriqueAchat> listData;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public HistoriqueListAdapter(Context context, List<OneTimbrePanier> listData) {
+    public HistoriqueListAdapter(Context context, List<HistoriqueAchat> listData) {
+        Log.d(this.getClass().getName(), "sendTaskResponse success 1 " +listData.toString());
         this.listData = listData;
+        Log.d(this.getClass().getName(), "sendTaskResponse success 2 " +this.listData.toString());
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
     }
@@ -60,12 +62,18 @@ public class HistoriqueListAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        OneTimbrePanier timbre = this.listData.get(i);
-        holder.libelle.setText(timbre.getLibelle());
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");//yyyy-MM-dd
+        HistoriqueAchat timbre = this.listData.get(i);
+        holder.libelle.setText(timbre.getTransactionType());
         holder.date.setText(format.format(timbre.getTransactionDate()) );
-        holder.prix.setText(timbre.getPrixU() + " FCFA");
-        holder.statut.setText(timbre.getType());
+        holder.prix.setText(timbre.getAmount() + " FCFA");
+        if (timbre.getStatus().equals("AVAILABLE")) {
+            holder.statut.setText("Utilisable");
+            holder.statut.setTextColor(Color.GREEN);
+        }else {
+            holder.statut.setText("Consommé");
+            holder.statut.setTextColor(Color.RED);
+        }
 
         return view;
     }

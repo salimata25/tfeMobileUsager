@@ -44,7 +44,7 @@
     <string name="valider">Valider</string>
 
     <string name="quittance_fe_tittre_montant_global">Quittance passeport</string>
-    <string name="timbre_fe_tittre_montant_global">Achat timbre :</string>
+    <string name="timbre_fe_tittre_montant_global">Timbre fiscal</string>
     <string name="imprimer_une_seule">Imprimer</string>
 
     <string name="url_current">URL EN COURS: </string>

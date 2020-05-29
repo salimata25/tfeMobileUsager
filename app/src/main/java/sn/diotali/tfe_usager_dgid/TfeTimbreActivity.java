@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -67,93 +68,33 @@ public class TfeTimbreActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            List<Timbre> panierTimbres = new ArrayList<>();
             switch (v.getId()){
                 case R.id.choix_timbre_1000 : {
-
-                    int nb1000 = 1;
-                    int nb2000 = 0;
-                    int nb5000 = 0;
-                    int nb10000 = 0;
-                    int nb = nb1000+nb2000+nb5000+nb10000;
-                    if(nb>0){
-
-                        List<Timbre> panierTimbres = new ArrayList<>();
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 1000", 1000, nb1000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 2000", 2000, nb2000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 5000", 5000, nb5000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 10000", 10000, nb10000));
-
-                        Constants.newTransaction.setPanierTimbres(panierTimbres);
-
-                    }
-
+                    panierTimbres.add(new Timbre("Timbre quotite", "Timbre 1000", 1000, 1));
+                    Constants.newTransaction.setMontantTotal(1000);
                     break;
                 }
                 case R.id.choix_timbre_2000 : {
-
-                    int nb1000 = 0;
-                    int nb2000 = 1;
-                    int nb5000 = 0;
-                    int nb10000 = 0;
-                    int nb = nb1000+nb2000+nb5000+nb10000;
-                    if(nb>0){
-
-                        List<Timbre> panierTimbres = new ArrayList<>();
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 1000", 1000, nb1000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 2000", 2000, nb2000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 5000", 5000, nb5000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 10000", 10000, nb10000));
-
-                        Constants.newTransaction.setPanierTimbres(panierTimbres);
-
-                    }
-
+                    panierTimbres.add(new Timbre("Timbre quotite", "Timbre 2000", 2000, 1));
+                    Constants.newTransaction.setMontantTotal(2000);
                     break;
                 }
                 case R.id.choix_timbre_5000 : {
-
-                    int nb1000 = 0;
-                    int nb2000 = 0;
-                    int nb5000 = 1;
-                    int nb10000 = 0;
-                    int nb = nb1000+nb2000+nb5000+nb10000;
-                    if(nb>0){
-
-                        List<Timbre> panierTimbres = new ArrayList<>();
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 1000", 1000, nb1000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 2000", 2000, nb2000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 5000", 5000, nb5000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 10000", 10000, nb10000));
-
-                        Constants.newTransaction.setPanierTimbres(panierTimbres);
-
-                    }
-
+                    panierTimbres.add(new Timbre("Timbre quotite", "Timbre 5000", 5000, 1));
+                    Constants.newTransaction.setMontantTotal(5000);
                     break;
                 }
                 case R.id.choix_timbre_10000 : {
-
-                    int nb1000 = 0;
-                    int nb2000 = 0;
-                    int nb5000 = 0;
-                    int nb10000 = 1;
-                    int nb = nb1000+nb2000+nb5000+nb10000;
-                    if(nb>0){
-
-                        List<Timbre> panierTimbres = new ArrayList<>();
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 1000", 1000, nb1000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 2000", 2000, nb2000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 5000", 5000, nb5000));
-                        panierTimbres.add(new Timbre("Timbre quotite", "Timbre 10000", 10000, nb10000));
-
-                        Constants.newTransaction.setPanierTimbres(panierTimbres);
-
-                    }
-
+                    panierTimbres.add(new Timbre("Timbre quotite", "Timbre 10000", 10000, 1));
+                    Constants.newTransaction.setMontantTotal(10000);
                     break;
                 }
 
             }
+            Constants.newTransaction.setPanierTimbres(panierTimbres);
+            Intent intent = new Intent(TfeTimbreActivity.this, ValidationAchatTimbreActivity.class);
+            startActivityForResult(intent,Constants.ActivityRequest.VALIDATION);
         }
     }
 
@@ -164,28 +105,18 @@ public class TfeTimbreActivity extends AppCompatActivity {
             switch(resultCode){
                 case Constants.ResponseActivty.OK :{
                     switch(requestCode){
-                        case Constants.ActivityRequest.PRINT_CHOICE :{
-                            Intent intent = new Intent(this,ValidationAchatTimbreActivity.class);
-                            startActivityForResult(intent,Constants.ActivityRequest.FINAL_DISPLAY);
+                        case Constants.ActivityRequest.VALIDATION :{
+                            Intent intent = new Intent(this,ModePaiementActivity.class);
+                            startActivityForResult(intent,Constants.ActivityRequest.PAIEMENTMODE);
                             break;
                         }
-                    }
-
-                }
-                case Constants.ResponseActivty.NOK :{
-                    switch(requestCode){
-                        case Constants.ActivityRequest.RECAPITULATIF :{
-
+                        case Constants.ActivityRequest.PAIEMENTMODE :{
+                            Intent intent = new Intent(this,PaiementMobileActivity.class);
+                            startActivityForResult(intent,Constants.ActivityRequest.PAIEMENTMOBILE);
                             break;
                         }
-                        case Constants.ActivityRequest.PRINT_CHOICE :{
 
-                            break;
-                        }
-                        case Constants.ActivityRequest.FINAL_DISPLAY:{
 
-                            break;
-                        }
                     }
                 }
                 default:{

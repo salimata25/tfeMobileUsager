@@ -146,6 +146,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/txt_montant_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" 20.000 FCFA"
@@ -177,6 +178,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/txt_frais_supp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" 1.000 FCFA"
@@ -207,6 +209,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/txt_prix_net"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" 21.000 FCFA"
@@ -230,6 +233,70 @@
                 android:textSize="20sp"
                 android:textColor="#ff5f00"
                 app:layout_constraintTop_toBottomOf="@id/layout_montant_global"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <EditText
+                android:id="@+id/txt_n_tel"
+                style="@style/EditTextInscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:ems="10"
+                android:hint="N° Téléphone"
+                android:inputType="number"
+                android:textAllCaps="true"
+                android:layout_gravity="center_horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/txt_remplir"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <EditText
+                android:id="@+id/txt_code_auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:hint="Code d'autorisation"
+                android:inputType="number"
+                style="@style/EditTextInscription"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/labelFirstName"/>
+
+            <TextView
+                android:id="@+id/txt_v_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorRed"
+                app:layout_constraintTop_toBottomOf="@id/form_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <Button
+                android:id="@+id/btn_valider"
+                android:layout_width="@dimen/dimen_tf_login_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/btn_valider"
+                android:text="Valider"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toBottomOf="@id/labelPhone"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
 

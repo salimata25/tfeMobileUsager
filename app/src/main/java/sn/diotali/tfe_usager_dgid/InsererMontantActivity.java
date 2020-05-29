@@ -21,7 +21,6 @@ import sn.diotali.tfe_usager_dgid.utils.Constants;
 
 public class InsererMontantActivity extends AppCompatActivity {
 
-    private TextView txt_libelle;
     private Button btn_achat_valider;
     private ImageView menu_bar;
     private EditText txt_montant;
@@ -33,16 +32,10 @@ public class InsererMontantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inserer_montant);
 
-        Constants.newTransaction = new TransactionRequest();
-        Constants.newTransaction.setTransactionType(Constants.Menu.TIMBRE);
-
-        libelle = getIntent().getExtras().getString("libelle");
-
         txt_montant = findViewById(R.id.montant);
+        libelle = Constants.newTransaction.getAutreMontant();
 
 
-        //txt_libelle = findViewById(R.id.libelle);
-        //txt_libelle.setText(libelle);
 
         menu_bar = findViewById(R.id.menu_bar);
 
@@ -68,9 +61,21 @@ public class InsererMontantActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.btn_achat_valider : {
+                    if (txt_montant.getText().toString() == null || txt_montant.getText().toString().replaceAll(" ", "").isEmpty()) {
+                        txt_montant.setError("Montant");
+                    }else {
+                        montant = Integer.parseInt(txt_montant.getText().toString());
+                        Constants.newTransaction.setMontantTotal(montant);
+                        List<Timbre> panierTimbres = new ArrayList<>();
+                        panierTimbres.add(new Timbre("Timbre quotite", libelle, montant, 1));
 
-                    Intent intent = new Intent(getApplicationContext(), ModePaiementActivity.class);
-                    startActivity(intent);
+                        Constants.newTransaction.setPanierTimbres(panierTimbres);
+
+                        Intent intent = new Intent();
+                        setResult(Constants.ResponseActivty.OK,intent);
+                        finish();
+                    }
+                    break;
                 }
 
 
@@ -83,33 +88,6 @@ public class InsererMontantActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         try {
             switch(resultCode){
-                case Constants.ResponseActivty.OK :{
-                    switch(requestCode){
-                        case Constants.ActivityRequest.PRINT_CHOICE :{
-                            Intent intent = new Intent(this,ValidationAchatTimbreActivity.class);
-                            startActivityForResult(intent,Constants.ActivityRequest.FINAL_DISPLAY);
-                            break;
-                        }
-
-                    }
-
-                }
-                case Constants.ResponseActivty.NOK :{
-                    switch(requestCode){
-                        case Constants.ActivityRequest.RECAPITULATIF :{
-
-                            break;
-                        }
-                        case Constants.ActivityRequest.PRINT_CHOICE :{
-
-                            break;
-                        }
-                        case Constants.ActivityRequest.FINAL_DISPLAY:{
-
-                            break;
-                        }
-                    }
-                }
                 default:{
                     switch (requestCode) {
                         case Constants.ActivityRequest.FINAL_DISPLAY: {
